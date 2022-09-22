@@ -32,6 +32,10 @@ struct BeerListView: View {
             }
             Text("Select an item")
         }
+        .onAppear() {
+            let controller = BeerController()
+            controller.getBeers(food: "")
+        }
     }
     
 }
