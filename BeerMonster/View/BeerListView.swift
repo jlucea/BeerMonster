@@ -12,6 +12,8 @@ struct BeerListView: View {
     
     @StateObject private var viewModel = BeerViewModel()
     
+    @State var searchQuery = ""
+    
     var body: some View {
         
         NavigationView {
@@ -27,8 +29,12 @@ struct BeerListView: View {
                 }
                 
             }
+            .searchable(text: $searchQuery)
+            .onChange(of: searchQuery) { _ in
+                print("Submit search - update data")
+                viewModel.getBeers(food: searchQuery)
+            }
             .toolbar {
-                
             }
             Text("Select an item")
         }
@@ -36,6 +42,7 @@ struct BeerListView: View {
             viewModel.getBeers(food: "")
         }
     }
+    
     
 }
 

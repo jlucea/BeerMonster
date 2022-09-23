@@ -62,8 +62,10 @@ class PunkBeerApiDataSource {
                 let decodedData = try decoder.decode([Beer].self, from: beerData)
                 
                 print("\(decodedData.count) beers decoded")
-                print("First beer: \(decodedData[0].name)")
-                print(decodedData[0].description)
+                if (!decodedData.isEmpty){
+                    print("First beer: \(decodedData[0].name)")
+                    print(decodedData[0].description)
+                }
                 
                 handler.handleBeers(beers: decodedData)
                 
