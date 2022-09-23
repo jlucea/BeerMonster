@@ -10,15 +10,16 @@ import CoreData
 
 struct BeerListView: View {
     
-    var beers : [Beer]
+    @StateObject private var viewModel = BeerViewModel()
     
     var body: some View {
         
         NavigationView {
             
             List {
-                ForEach(beers) { beer in
+                ForEach(viewModel.beers) { beer in
                     NavigationLink {
+                        // Elements inside detail view
                         Text("beer")
                     } label: {
                         Text(beer.name)
@@ -28,22 +29,21 @@ struct BeerListView: View {
             }
             .toolbar {
                 
-                
             }
             Text("Select an item")
         }
         .onAppear() {
-            let controller = BeerController()
-            controller.getBeers(food: "")
+            viewModel.getBeers(food: "")
         }
     }
     
 }
 
+
 struct BeerListView_Previews: PreviewProvider {
     
     static var previews: some View {
-        BeerListView(beers: SampleDataHandler.sampleBeers).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        BeerListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
- 
+

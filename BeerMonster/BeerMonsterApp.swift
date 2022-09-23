@@ -13,7 +13,7 @@ struct BeerMonsterApp: App {
 
     var body: some Scene {
         WindowGroup {
-            BeerListView(beers: SampleDataHandler.sampleBeers)
+            BeerListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

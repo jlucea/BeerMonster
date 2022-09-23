@@ -7,14 +7,14 @@
 
 import Foundation
 
-class PunkBeerApiDataHandler {
+class PunkBeerApiDataSource {
     
     let punkURL : String = "https://api.punkapi.com/v2/beers"
     
-    let controller : BeerController
+    let handler : BeerDataHandler
     
-    init(controller: BeerController) {
-        self.controller = controller
+    init(dataHandler: BeerDataHandler) {
+        self.handler = dataHandler
     }
     
     func getBeers(foodParam: String) {
@@ -52,25 +52,25 @@ class PunkBeerApiDataHandler {
             return
         }
         
-        if let safeData = data {
-            print("\(safeData.count) bytes received")
+        if let beerData = data {
+            print("\(beerData.count) bytes received")
             // let dataString = String(data: safeData, encoding: .utf8)
             // print(dataString)
             print("Decoding JSON...")
-            self.parseJSON(beerData: safeData)
-        }
-        
-    }
-    
-    private func parseJSON(beerData: Data) {
-        let decoder = JSONDecoder()
-        do {
-            let decodedData = try decoder.decode([Beer].self, from: beerData)
-            print("\(decodedData.count) beers decoded")
-            print("First beer: \(decodedData[0].name)")
-            print(decodedData[0].description)
-        } catch {
-            print(error)
+            let decoder = JSONDecoder()
+            do {
+                let decodedData = try decoder.decode([Beer].self, from: beerData)
+                
+                print("\(decodedData.count) beers decoded")
+                print("First beer: \(decodedData[0].name)")
+                print(decodedData[0].description)
+                
+                handler.handleBeers(beers: decodedData)
+                
+            } catch {
+                print(error)
+                handler.handleError(error: "JSON Error")
+            }
         }
     }
     
