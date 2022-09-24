@@ -20,29 +20,26 @@ struct BeerListView: View {
             
             List {
                 ForEach(viewModel.beers) { beer in
-                    NavigationLink {
-                        // Elements inside detail view
-                        Text("beer")
-                    } label: {
+                    NavigationLink (destination: BeerDetailView(beer: beer), label: {
                         Text(beer.name)
-                    }
+                    })
                 }
-                
             }
-            .searchable(text: $searchQuery)
+            .navigationTitle("Beers")
+            .searchable(text: $searchQuery, placement: .navigationBarDrawer(displayMode: .always))
             .onChange(of: searchQuery) { _ in
-                print("Submit search - update data")
+                print("Search query changed - updating data")
                 viewModel.getBeers(food: searchQuery)
             }
             .toolbar {
             }
             Text("Select an item")
         }
+        
         .onAppear() {
             viewModel.getBeers(food: "")
         }
     }
-    
     
 }
 
