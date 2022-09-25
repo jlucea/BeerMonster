@@ -17,7 +17,6 @@ struct BeerListView: View {
     var body: some View {
         
         NavigationView {
-            
             List {
                 ForEach(viewModel.beers) { beer in
                     NavigationLink (destination: BeerDetailView(beer: beer), label: {
@@ -30,14 +29,14 @@ struct BeerListView: View {
             .onChange(of: searchQuery) { _ in
                 print("Search query changed - updating data")
                 viewModel.getBeers(food: searchQuery)
-                }
+            }
             .refreshable {
                 viewModel.getBeers(food: searchQuery)
             }
             //.toolbar {
             //}
         }
-        
+        .navigationViewStyle(.stack)
         .onAppear() {
             viewModel.getBeers(food: "")
         }

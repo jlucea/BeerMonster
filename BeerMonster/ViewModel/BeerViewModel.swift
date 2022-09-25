@@ -14,10 +14,8 @@ extension BeerListView {
         @Published var beers : [Beer] = []
         
         func getBeers(food: String) {
-            
             let dataHandler = PunkBeerApiDataSource(dataHandler: self)
             dataHandler.getBeers(foodParam: food)
-            
         }
         
         nonisolated func handleBeers(beers: [Beer]) {

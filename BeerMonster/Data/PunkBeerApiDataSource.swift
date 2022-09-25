@@ -9,7 +9,7 @@ import Foundation
 
 class PunkBeerApiDataSource {
     
-    let punkURL : String = "https://api.punkapi.com/v2/beers"
+    let punkURL : String = "https://api.punkapi.com/v2/beers?page=1&per_page=40"
     
     let handler : BeerDataHandler
     
@@ -18,11 +18,9 @@ class PunkBeerApiDataSource {
     }
     
     func getBeers(foodParam: String) {
-        var urlString : String
-        if (!foodParam.isEmpty){
-            urlString = "\(punkURL)?food=\(foodParam)"
-        } else {
-            urlString = "\(punkURL)"
+        var urlString = punkURL
+        if !foodParam.isEmpty {
+            urlString = "\(urlString)&food=\(foodParam)"
         }
         performRequest(urlString: urlString)
     }
@@ -62,11 +60,12 @@ class PunkBeerApiDataSource {
                 let decodedData = try decoder.decode([Beer].self, from: beerData)
                 
                 print("\(decodedData.count) beers decoded")
+                /*
                 if (!decodedData.isEmpty){
                     print("First beer: \(decodedData[0].name)")
                     print(decodedData[0].description)
                 }
-                
+                 */
                 handler.handleBeers(beers: decodedData)
                 
             } catch {
