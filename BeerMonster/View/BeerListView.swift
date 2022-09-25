@@ -21,7 +21,7 @@ struct BeerListView: View {
             List {
                 ForEach(viewModel.beers) { beer in
                     NavigationLink (destination: BeerDetailView(beer: beer), label: {
-                        Text(beer.name)
+                        BeerListCell(beer: beer)
                     })
                 }
             }
@@ -30,10 +30,12 @@ struct BeerListView: View {
             .onChange(of: searchQuery) { _ in
                 print("Search query changed - updating data")
                 viewModel.getBeers(food: searchQuery)
+                }
+            .refreshable {
+                viewModel.getBeers(food: searchQuery)
             }
-            .toolbar {
-            }
-            Text("Select an item")
+            //.toolbar {
+            //}
         }
         
         .onAppear() {

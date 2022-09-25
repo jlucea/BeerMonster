@@ -19,7 +19,7 @@ struct BeerDetailView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             // Header: beer image + title + tagline
-            HStack (alignment: .top){
+            HStack (alignment: .top) {
                 if let urlStr = beer.image_url {
                     AsyncImage(url: URL(string: urlStr)) { image in
                         image.resizable()
@@ -63,6 +63,7 @@ struct BeerDetailView: View {
             Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
+        // .navigationTitle(beer.name)
         
     } // End of body
 } // End of struct
